@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SentinelAI | Autonomous Agentic AI Code Security Auditor</title>
+  <title>SentinelAI | DevSecOps Code Security Studio</title>
 
-  <!-- Google Fonts: Syne, Inter, Fira Code -->
+  <!-- Google Fonts: Space Grotesk, JetBrains Mono, Fira Code -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -20,17 +20,18 @@
 
   <style>
     :root {
-      --bg-dark: #0a0e17;
-      --panel-bg: #111827;
-      --panel-border: #1f2937;
-      --accent-purple: #8b5cf6;
-      --accent-cyan: #06b6d4;
-      --accent-pink: #f43f5e;
-      --accent-green: #10b981;
-      --accent-amber: #f59e0b;
-      --text-bright: #f9fafb;
+      --sidebar-width: 260px;
+      --bg-dark: #07090e;
+      --panel-bg: #0d111a;
+      --panel-border: #1a2234;
+      --accent-neon-green: #00ff87;
+      --accent-violet: #7928ca;
+      --accent-pink: #ff0080;
+      --accent-cyan: #60a5fa;
+      --accent-danger: #ff4d4d;
+      --text-main: #f3f4f6;
       --text-dim: #9ca3af;
-      --font-display: 'Syne', sans-serif;
+      --font-heading: 'Space Grotesk', sans-serif;
       --font-code: 'Fira Code', monospace;
     }
 
@@ -38,67 +39,131 @@
 
     body {
       background-color: var(--bg-dark);
-      color: var(--text-bright);
-      font-family: 'Inter', sans-serif;
-      line-height: 1.5;
+      color: var(--text-main);
+      font-family: 'Space Grotesk', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
     }
 
-    .font-display { font-family: var(--font-display); }
+    .font-heading { font-family: var(--font-heading); }
     .font-code { font-family: var(--font-code); }
 
-    .container-fluid { max-width: 1480px; margin: 0 auto; padding: 0 24px; }
-
-    /* Top Security Radar Banner */
-    .radar-banner {
-      background: linear-gradient(135deg, #130a2a 0%, #0d1222 100%);
-      border-bottom: 1px solid rgba(139, 92, 246, 0.3);
-      padding: 16px 0;
-      position: relative;
-      overflow: hidden;
+    /* Vertical Sidebar + Main Canvas Layout */
+    .app-layout {
+      display: flex;
+      min-height: 100vh;
     }
 
-    .radar-line {
-      position: absolute;
+    /* Left Sidebar Navigation Dock */
+    .sidebar-dock {
+      width: var(--sidebar-width);
+      background: #090c14;
+      border-right: 1px solid var(--panel-border);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: fixed;
       top: 0;
+      bottom: 0;
       left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent-purple), var(--accent-cyan), transparent);
-      animation: radar-scan 3s linear infinite;
+      z-index: 10;
     }
 
-    @keyframes radar-scan {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
+    .brand-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--panel-border);
+      margin-bottom: 24px;
     }
 
-    .header-content { display: flex; justify-content: space-between; align-items: center; }
-
-    .logo-box { display: flex; align-items: center; gap: 14px; }
-
-    .logo-icon-hexagon {
-      width: 42px;
-      height: 42px;
-      background: linear-gradient(135deg, var(--accent-purple), #4c1d95);
-      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, var(--accent-neon-green), var(--accent-cyan));
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #fff;
+      color: #000;
       font-size: 1.2rem;
-      box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+      box-shadow: 0 0 15px rgba(0, 255, 135, 0.4);
     }
 
-    .logo-text { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; }
-    .logo-text span { color: var(--accent-purple); }
-
-    .btn-action {
-      background: linear-gradient(135deg, var(--accent-purple), #6d28d9);
+    .brand-name {
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.5px;
       color: #fff;
-      border: none;
-      padding: 10px 20px;
+    }
+    .brand-name span { color: var(--accent-neon-green); }
+
+    .nav-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
       border-radius: 8px;
-      font-family: var(--font-display);
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item:hover, .nav-item.active {
+      background: rgba(0, 255, 135, 0.08);
+      color: var(--accent-neon-green);
+      border-left: 3px solid var(--accent-neon-green);
+    }
+
+    /* Main Workspace Studio */
+    .main-workspace {
+      margin-left: var(--sidebar-width);
+      flex-grow: 1;
+      padding: 28px;
+      background: radial-gradient(circle at 80% 10%, rgba(121, 40, 202, 0.08) 0%, transparent 50%);
+    }
+
+    /* Top Workspace Control Bar */
+    .workspace-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      padding: 14px 20px;
+      border-radius: 12px;
+    }
+
+    .repo-pill {
+      font-family: var(--font-code);
+      font-size: 0.8rem;
+      background: #141c2e;
+      border: 1px solid #26334d;
+      padding: 6px 12px;
+      border-radius: 20px;
+      color: var(--accent-cyan);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-scan {
+      background: linear-gradient(135deg, var(--accent-neon-green), #059669);
+      color: #000;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
       font-weight: 700;
       font-size: 0.85rem;
       cursor: pointer;
@@ -106,78 +171,147 @@
       align-items: center;
       gap: 8px;
       transition: all 0.2s ease;
-      box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+      box-shadow: 0 4px 15px rgba(0, 255, 135, 0.3);
     }
 
-    .btn-action:hover {
+    .btn-scan:hover {
       transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
+      box-shadow: 0 6px 20px rgba(0, 255, 135, 0.5);
     }
 
-    .sec-card {
+    /* Dual-Pane Code Auditor Workspace */
+    .dual-pane-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .pane-card {
       background: var(--panel-bg);
       border: 1px solid var(--panel-border);
       border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    }
-
-    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 24px; }
-    .grid-ide { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 24px; margin-bottom: 24px; }
-
-    /* IDE Code Editor Layout */
-    .ide-container {
-      background: #080c14;
-      border: 1px solid #1e293b;
-      border-radius: 10px;
       overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
-    .ide-header {
-      background: #0f172a;
-      padding: 10px 16px;
-      border-bottom: 1px solid #1e293b;
+    .pane-header {
+      background: #101624;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--panel-border);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    /* File Tree Navigator */
+    .file-tree-bar {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      margin-bottom: 20px;
+      padding-bottom: 6px;
+    }
+
+    .file-tab {
+      background: #101624;
+      border: 1px solid var(--panel-border);
+      padding: 8px 14px;
+      border-radius: 8px;
       font-family: var(--font-code);
       font-size: 0.78rem;
       color: var(--text-dim);
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .code-diff-table {
+    .file-tab.active {
+      background: rgba(0, 255, 135, 0.1);
+      border-color: var(--accent-neon-green);
+      color: #fff;
+    }
+
+    .vulnerability-badge {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-pink);
+      box-shadow: 0 0 8px var(--accent-pink);
+    }
+
+    /* Code Editor Line Display */
+    .code-editor {
+      font-family: var(--font-code);
+      font-size: 0.82rem;
+      background: #090c14;
+      padding: 16px;
+      overflow-x: auto;
+      line-height: 1.7;
+    }
+
+    .code-line {
+      display: flex;
+      gap: 16px;
+    }
+
+    .line-number {
+      width: 30px;
+      color: #4b5563;
+      user-select: none;
+      text-align: right;
+    }
+
+    .line-vuln {
+      background: rgba(255, 77, 77, 0.15);
+      border-left: 3px solid var(--accent-danger);
+      color: #fca5a5;
+      padding-left: 8px;
       width: 100%;
-      border-collapse: collapse;
+    }
+
+    .line-fix {
+      background: rgba(0, 255, 135, 0.15);
+      border-left: 3px solid var(--accent-neon-green);
+      color: #a7f3d0;
+      padding-left: 8px;
+      width: 100%;
+    }
+
+    /* Bottom Interactive Command Console */
+    .terminal-console {
+      background: #080b12;
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      padding: 16px;
       font-family: var(--font-code);
       font-size: 0.8rem;
     }
 
-    .code-diff-table td { padding: 4px 10px; }
-
-    .line-num {
-      width: 40px;
-      text-align: right;
-      color: #475569;
-      user-select: none;
-      border-right: 1px solid #1e293b;
+    .console-header {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+      font-size: 0.75rem;
     }
 
-    .line-del { background: rgba(244, 63, 94, 0.15); color: #fda4af; }
-    .line-add { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; }
-
-    .badge-tag {
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 4px;
-      text-transform: uppercase;
+    .console-stream {
+      color: var(--accent-neon-green);
+      height: 100px;
+      overflow-y: auto;
+      line-height: 1.6;
     }
-
-    .badge-cwe { background: rgba(139, 92, 246, 0.2); color: var(--accent-purple); border: 1px solid rgba(139, 92, 246, 0.4); }
 
     @media (max-width: 1024px) {
-      .grid-4 { grid-template-columns: repeat(2, 1fr); }
-      .grid-ide { grid-template-columns: 1fr; }
+      .dual-pane-grid { grid-template-columns: 1fr; }
+      .sidebar-dock { width: 70px; padding: 16px 8px; }
+      .sidebar-dock .brand-name, .sidebar-dock .nav-text { display: none; }
+      .main-workspace { margin-left: 70px; }
     }
   </style>
 </head>
@@ -188,254 +322,237 @@
   <script type="text/babel">
     const { useState } = React;
 
-    const SECURITY_ISSUES = [
+    const REPO_FILES = [
       {
-        id: "VULN-01",
-        cwe: "CWE-89",
-        category: "OWASP A03: SQL Injection",
-        severity: "CRITICAL",
-        file: "auth/service.py",
-        line: 18,
-        snippet: "query = f\"SELECT * FROM users WHERE username = '{user}' AND password = '{pwd}'\"",
-        remediation: "Replace string interpolation with parameterized SQL query placeholder parameters.",
-        fixed: false,
-        diffOriginal: "- query = f\"SELECT * FROM users WHERE username = '{user}' AND password = '{pwd}'\"\n- cursor.execute(query)",
-        diffFixed: "+ query = \"SELECT * FROM users WHERE username = ? AND password = ?\"\n+ cursor.execute(query, (user, pwd))"
+        id: 'f1',
+        filename: 'auth_service.py',
+        path: 'services/auth_service.py',
+        hasVuln: true,
+        cwe: 'CWE-89',
+        vulnType: 'SQL Injection',
+        lineNum: 14,
+        vulnCode: 'cursor.execute(f"SELECT * FROM users WHERE user=\'{username}\' AND pass=\'{password}\'")',
+        fixCode: 'cursor.execute("SELECT * FROM users WHERE user=? AND pass=?", (username, password))',
+        desc: 'Unsanitized string interpolation inside raw SQL query execution.'
       },
       {
-        id: "VULN-02",
-        cwe: "CWE-798",
-        category: "OWASP A07: Hardcoded Secret",
-        severity: "HIGH",
-        file: "config/aws.py",
-        line: 7,
-        snippet: "AWS_ACCESS_KEY = \"AKIAIOSFODNN7EXAMPLE_SECRET_EXPOSED\"",
-        remediation: "Remove plaintext credentials from codebase. Retrieve secrets dynamically from environment variables.",
-        fixed: false,
-        diffOriginal: "- AWS_ACCESS_KEY = \"AKIAIOSFODNN7EXAMPLE_SECRET_EXPOSED\"",
-        diffFixed: "+ AWS_ACCESS_KEY = os.getenv(\"AWS_ACCESS_KEY\")"
+        id: 'f2',
+        filename: 'aws_config.py',
+        path: 'config/aws_config.py',
+        hasVuln: true,
+        cwe: 'CWE-798',
+        vulnType: 'Hardcoded API Key',
+        lineNum: 6,
+        vulnCode: 'AWS_SECRET_KEY = "AKIAIOSFODNN7EXAMPLE_SECRET_KEY"',
+        fixCode: 'AWS_SECRET_KEY = os.getenv("AWS_SECRET_KEY")',
+        desc: 'Plaintext secret credential hardcoded directly in production source code.'
       },
       {
-        id: "VULN-03",
-        cwe: "CWE-79",
-        category: "OWASP A03: Reflected XSS",
-        severity: "HIGH",
-        file: "views/profile.py",
-        line: 29,
-        snippet: "return f\"<div>Welcome back, {username}!</div>\"",
-        remediation: "Escape user input using HTML sanitizer before rendering into DOM templates.",
-        fixed: false,
-        diffOriginal: "- return f\"<div>Welcome back, {username}!</div>\"",
-        diffFixed: "+ safe_user = flask.escape(username)\n+ return f\"<div>Welcome back, {safe_user}!</div>\""
+        id: 'f3',
+        filename: 'render_views.py',
+        path: 'views/render_views.py',
+        hasVuln: true,
+        cwe: 'CWE-79',
+        vulnType: 'Cross-Site Scripting',
+        lineNum: 22,
+        vulnCode: 'return f"<h1>Hello {user_input}!</h1>"',
+        fixCode: 'safe_input = html.escape(user_input)\nreturn f"<h1>Hello {safe_input}!</h1>"',
+        desc: 'Reflected user input injected directly into HTML response DOM without escaping.'
       }
     ];
 
-    function DevSecOpsDashboard() {
-      const [issues, setIssues] = useState(SECURITY_ISSUES);
-      const [selectedID, setSelectedID] = useState(SECURITY_ISSUES[0].id);
+    function SentinelApp() {
+      const [activeTab, setActiveTab] = useState('audit');
+      const [selectedFileID, setSelectedFileID] = useState('f1');
+      const [remediated, setRemediated] = useState({});
       const [isScanning, setIsScanning] = useState(false);
-      const [terminalLogs, setTerminalLogs] = useState([
-        "[DEVSECOPS] AST Scanner v3.2 initialized.",
-        "[SCANNER] Tokenizing python AST tree for repository yaya2127/auth-microservice...",
-        "[SCANNER] 3 high-severity security vulnerabilities detected.",
-        "[AI-REASONER] Unified diff fixes generated."
+      const [logs, setLogs] = useState([
+        '[SYSTEM] SentinelAI AST Engine v3.4 online.',
+        '[PARSER] Analyzed 3 files in target repo yaya2127/security-target-service.',
+        '[AST-REASONER] 3 Critical vulnerabilities identified. Unified diff patches synthesized.'
       ]);
 
-      const activeIssue = issues.find(i => i.id === selectedID) || issues[0];
-      const unfixedCount = issues.filter(i => !i.fixed).length;
-      const riskScore = unfixedCount * 30;
+      const activeFile = REPO_FILES.find(f => f.id === selectedFileID) || REPO_FILES[0];
+      const isFixed = remediated[activeFile.id];
 
-      const handleFix = (id) => {
-        setIssues(prev => prev.map(i => i.id === id ? { ...i, fixed: true } : i));
-        setTerminalLogs(prev => [...prev, `[AI-AUTOFIX] Applied unified Git diff patch for ${id}. Security score updated.`]);
+      const handleApplyPatch = () => {
+        setRemediated(prev => ({ ...prev, [activeFile.id]: true }));
+        setLogs(prev => [...prev, `[PATCH-MERGE] Applied unified Git diff patch for ${activeFile.filename}. Issue resolved.`]);
       };
 
-      const handleReScan = () => {
+      const handleTriggerScan = () => {
         setIsScanning(true);
-        setTerminalLogs(prev => [...prev, `[SCANNER] Re-scanning codebase repository AST tokens...`]);
+        setLogs(prev => [...prev, `[SCANNER] Re-scanning AST token trees across repository...`]);
         setTimeout(() => {
           setIsScanning(false);
-          setTerminalLogs(prev => [...prev, `[SCANNER] Re-scan complete. All security parameters compliant.`]);
+          setLogs(prev => [...prev, `[SCANNER] Scan complete. 0 new security breaches found.`]);
         }, 1200);
       };
 
       return (
-        <div>
-          {/* Radar Header */}
-          <div className="radar-banner">
-            <div className="radar-line"></div>
-            <div className="container-fluid header-content">
-              <div className="logo-box">
-                <div className="logo-icon-hexagon">
-                  <i className="fas fa-shield-cat"></i>
+        <div className="app-layout">
+          
+          {/* Left Vertical Dock Navigation */}
+          <aside className="sidebar-dock">
+            <div>
+              <div className="brand-box">
+                <div className="brand-logo">
+                  <i className="fas fa-shield-halved"></i>
                 </div>
-                <div>
-                  <div className="logo-text">SENTINEL<span>AI</span></div>
-                  <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)', fontFamily: 'var(--font-code)' }}>
-                    DevSecOps Automated Code Vulnerability Auditor
-                  </div>
+                <div className="brand-name">
+                  Sentinel<span>AI</span>
                 </div>
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                <div style={{ background: '#0f172a', border: '1px solid #1e293b', padding: '6px 12px', borderRadius: '6px', fontSize: '0.75rem', fontFamily: 'var(--font-code)' }}>
-                  ISO/IEC 27001 & OWASP Top 10 Compliant
+              <div className="nav-menu">
+                <div className={`nav-item ${activeTab === 'audit' ? 'active' : ''}`} onClick={() => setActiveTab('audit')}>
+                  <i className="fas fa-microchip"></i>
+                  <span className="nav-text">AST Inspector</span>
                 </div>
-                <button onClick={handleReScan} disabled={isScanning} className="btn-action">
-                  <i className={`fas ${isScanning ? 'fa-spinner fa-spin' : 'fa-radar'}`}></i>
-                  {isScanning ? 'Scanning AST...' : 'Run Security Scan'}
-                </button>
+                <div className={`nav-item ${activeTab === 'patches' ? 'active' : ''}`} onClick={() => setActiveTab('patches')}>
+                  <i className="fas fa-code-pull-request"></i>
+                  <span className="nav-text">Git Patch Studio</span>
+                </div>
+                <div className={`nav-item ${activeTab === 'tests' ? 'active' : ''}`} onClick={() => setActiveTab('tests')}>
+                  <i className="fas fa-vial"></i>
+                  <span className="nav-text">Unit Test Suite</span>
+                </div>
+                <div className={`nav-item ${activeTab === 'rules' ? 'active' : ''}`} onClick={() => setActiveTab('rules')}>
+                  <i className="fas fa-sliders"></i>
+                  <span className="nav-text">Rule Registry</span>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Main Layout */}
-          <main className="container-fluid" style={{ paddingTop: '28px', paddingBottom: '40px' }}>
+            <div style={{ padding: '12px', background: '#07090e', borderRadius: '8px', border: '1px solid #1a2234', fontSize: '0.72rem', color: 'var(--text-dim)' }}>
+              <div><strong style={{ color: '#fff' }}>Compliance:</strong> OWASP Top 10</div>
+              <div><strong style={{ color: 'var(--accent-neon-green)' }}>Status:</strong> Active Defender</div>
+            </div>
+          </aside>
+
+          {/* Main Workspace Studio */}
+          <main className="main-workspace">
             
-            {/* Top Score Cards */}
-            <div className="grid-4">
-              <ScoreCard label="Codebase Security Index" value={`${100 - riskScore}/100`} sub={riskScore === 0 ? 'Fully Secure' : 'Vulnerabilities Present'} color={riskScore === 0 ? 'var(--accent-green)' : 'var(--accent-pink)'} icon="fas fa-shield-virus" />
-              <ScoreCard label="Active Vulnerabilities" value={unfixedCount} sub="Action Required" color="var(--accent-pink)" icon="fas fa-bug" />
-              <ScoreCard label="OWASP Top 10 Flaws" value="3 Flaws" sub="SQLi, Secrets, XSS" color="var(--accent-amber)" icon="fas fa-triangle-exclamation" />
-              <ScoreCard label="AI Patch Readiness" value="100%" sub="1-Click Git Diffs Ready" color="var(--accent-purple)" icon="fas fa-wand-magic-sparkles" />
+            {/* Top Workspace Bar */}
+            <div className="workspace-topbar">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                <h2 className="font-heading" style={{ fontSize: '1.2rem', color: '#fff' }}>
+                  DevSecOps Code Security Studio
+                </h2>
+                <div className="repo-pill">
+                  <i className="fab fa-github"></i> yaya2127/security-target-service
+                </div>
+              </div>
+
+              <button onClick={handleTriggerScan} disabled={isScanning} className="btn-scan">
+                <i className={`fas ${isScanning ? 'fa-spinner fa-spin' : 'fa-radar'}`}></i>
+                {isScanning ? 'Scanning AST...' : 'Run AST Security Audit'}
+              </button>
             </div>
 
-            {/* Main IDE Code Remediation View */}
-            <div className="grid-ide">
+            {/* Target File Tab Selector */}
+            <div className="file-tree-bar">
+              {REPO_FILES.map(f => (
+                <div
+                  key={f.id}
+                  onClick={() => setSelectedFileID(f.id)}
+                  className={`file-tab ${f.id === selectedFileID ? 'active' : ''}`}
+                >
+                  <i className="fas fa-file-code" style={{ color: 'var(--accent-cyan)' }}></i>
+                  {f.filename}
+                  {!remediated[f.id] && <span className="vulnerability-badge" title="Security Flaw Detected"></span>}
+                </div>
+              ))}
+            </div>
+
+            {/* Dual-Pane Code Auditor Workspace */}
+            <div className="dual-pane-grid">
               
-              {/* Left Column: Security Issue List */}
-              <div className="sec-card">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                  <h3 className="font-display" style={{ fontSize: '1.05rem', color: '#fff' }}>
-                    <i className="fas fa-vault" style={{ color: 'var(--accent-purple)', marginRight: '8px' }}></i>
-                    AST Vulnerability Registry
-                  </h3>
-                  <span style={{ fontSize: '0.72rem', color: 'var(--text-dim)', fontFamily: 'var(--font-code)' }}>
-                    {unfixedCount} Unresolved
+              {/* Left Pane: Vulnerable Source Code File */}
+              <div className="pane-card">
+                <div className="pane-header">
+                  <span>
+                    <i className="fas fa-bug" style={{ color: 'var(--accent-pink)', marginRight: '8px' }}></i>
+                    Vulnerable Source Code File ({activeFile.filename})
+                  </span>
+                  <span style={{ color: 'var(--accent-pink)', fontSize: '0.75rem', fontFamily: 'var(--font-code)' }}>
+                    {activeFile.cwe}
                   </span>
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                  {issues.map(iss => {
-                    const isSelected = iss.id === selectedID;
-                    return (
-                      <div
-                        key={iss.id}
-                        onClick={() => setSelectedID(iss.id)}
-                        style={{
-                          background: isSelected ? 'rgba(139, 92, 246, 0.12)' : '#0d1322',
-                          border: isSelected ? '1px solid var(--accent-purple)' : '1px solid #1e293b',
-                          borderRadius: '8px',
-                          padding: '14px',
-                          cursor: 'pointer',
-                          transition: 'all 0.2s ease'
-                        }}
-                      >
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-                          <span className="badge-tag badge-cwe">{iss.cwe}</span>
-                          <span style={{ fontSize: '0.7rem', fontFamily: 'var(--font-code)', color: 'var(--accent-cyan)' }}>{iss.file}:L{iss.line}</span>
-                        </div>
-                        <div style={{ fontWeight: 700, fontSize: '0.88rem', color: '#fff' }}>{iss.category}</div>
-                        <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)', marginTop: '4px' }}>{iss.remediation}</div>
-                        
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px', paddingTop: '8px', borderTop: '1px solid #1e293b' }}>
-                          <span style={{ fontSize: '0.72rem', color: iss.fixed ? 'var(--accent-green)' : 'var(--accent-pink)', fontWeight: 700 }}>
-                            {iss.fixed ? '✓ REMEDIATED' : '⚠ EXPOSED'}
-                          </span>
-                          {!iss.fixed && (
-                            <button
-                              onClick={(e) => { e.stopPropagation(); handleFix(iss.id); }}
-                              style={{ background: 'var(--accent-purple)', color: '#fff', border: 'none', padding: '4px 10px', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 700, cursor: 'pointer' }}
-                            >
-                              ⚡ Apply Patch
-                            </button>
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })}
+                <div style={{ padding: '14px', borderBottom: '1px solid var(--panel-border)', fontSize: '0.8rem', background: '#0b0f19' }}>
+                  <strong style={{ color: '#fff' }}>Flaw Category:</strong> {activeFile.vulnType}<br/>
+                  <span style={{ color: 'var(--text-dim)' }}>{activeFile.desc}</span>
+                </div>
+
+                <div className="code-editor">
+                  <div className="code-line"><span className="line-number">1</span><span>import os, sys, sqlite3</span></div>
+                  <div className="code-line"><span className="line-number">2</span><span>import flask</span></div>
+                  <div className="code-line"><span className="line-number">3</span><span></span></div>
+                  <div className="code-line"><span className="line-number">...</span><span style={{ color: '#6b7280' }}># Code logic initialization</span></div>
+                  
+                  <div className="code-line line-vuln">
+                    <span className="line-number" style={{ color: 'var(--accent-danger)' }}>{activeFile.lineNum}</span>
+                    <span>{activeFile.vulnCode}</span>
+                  </div>
+
+                  <div className="code-line"><span className="line-number">...</span><span style={{ color: '#6b7280' }}># End of file module</span></div>
                 </div>
               </div>
 
-              {/* Right Column: IDE Code Editor & Git Diff Fixer */}
-              <div className="sec-card" style={{ display: 'flex', flexDirection: 'column' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                  <h3 className="font-display" style={{ fontSize: '1.05rem', color: '#fff' }}>
-                    <i className="fas fa-code-merge" style={{ color: 'var(--accent-cyan)', marginRight: '8px' }}></i>
-                    IDE Code Remediation Engine
-                  </h3>
-                  {!activeIssue.fixed && (
-                    <button onClick={() => handleFix(activeIssue.id)} className="btn-action" style={{ fontSize: '0.78rem', padding: '6px 12px' }}>
-                      <i className="fas fa-wand-magic-sparkles"></i> Apply AI Secure Patch
+              {/* Right Pane: AI Secure Patch & Remediation Engine */}
+              <div className="pane-card" style={{ display: 'flex', flexDirection: 'column' }}>
+                <div className="pane-header">
+                  <span>
+                    <i className="fas fa-wand-magic-sparkles" style={{ color: 'var(--accent-neon-green)', marginRight: '8px' }}></i>
+                    AI Synthesized Secure Patch & Unified Diff
+                  </span>
+                  {!isFixed && (
+                    <button onClick={handleApplyPatch} className="btn-scan" style={{ padding: '4px 10px', fontSize: '0.75rem' }}>
+                      ⚡ Merge AI Patch
                     </button>
                   )}
                 </div>
 
-                <div className="ide-container" style={{ flexGrow: 1 }}>
-                  <div className="ide-header">
-                    <span><i className="fas fa-file-code" style={{ marginRight: '6px', color: 'var(--accent-purple)' }}></i>{activeIssue.file}</span>
-                    <span style={{ color: activeIssue.fixed ? 'var(--accent-green)' : 'var(--accent-pink)' }}>
-                      {activeIssue.fixed ? 'PATCH APPLIED' : 'VULNERABLE CODE DETECTED'}
-                    </span>
-                  </div>
-
-                  <div style={{ padding: '16px', overflowX: 'auto' }}>
-                    <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)', marginBottom: '12px' }}>
-                      <strong style={{ color: '#fff' }}>Vulnerable Snippet:</strong>
-                    </div>
-                    <table className="code-diff-table" style={{ marginBottom: '16px' }}>
-                      <tbody>
-                        <tr className="line-del">
-                          <td className="line-num">{activeIssue.line}</td>
-                          <td>{activeIssue.snippet}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-
-                    <div style={{ fontSize: '0.8rem', color: 'var(--accent-green)', marginBottom: '8px', fontWeight: 700 }}>
-                      AI Synthesized Secure Patch (Unified Diff):
-                    </div>
-                    <table className="code-diff-table">
-                      <tbody>
-                        {activeIssue.diffFixed.split('\n').map((line, idx) => (
-                          <tr key={idx} className="line-add">
-                            <td className="line-num">{activeIssue.line + idx}</td>
-                            <td>{line}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
+                <div style={{ padding: '14px', borderBottom: '1px solid var(--panel-border)', fontSize: '0.8rem', background: '#0b0f19' }}>
+                  <strong style={{ color: 'var(--accent-neon-green)' }}>Status:</strong> {isFixed ? '✓ Security Patch Merged into Codebase' : '⚠️ Unified Git Diff Ready for Merge'}
                 </div>
 
-                {/* DevSecOps Terminal Stream */}
-                <div style={{ marginTop: '20px', background: '#050811', border: '1px solid #1e293b', borderRadius: '8px', padding: '12px', fontFamily: 'var(--font-code)', fontSize: '0.75rem', color: 'var(--accent-cyan)' }}>
-                  <div style={{ color: 'var(--text-dim)', marginBottom: '6px', fontSize: '0.7rem' }}>LIVE AST AUDIT STREAM</div>
-                  {terminalLogs.slice(-3).map((l, i) => <div key={i}>{l}</div>)}
+                <div className="code-editor" style={{ flexGrow: 1 }}>
+                  <div style={{ color: '#6b7280', fontSize: '0.72rem', marginBottom: '8px' }}>--- Original Vulnerable Code:</div>
+                  <div className="code-line line-vuln">
+                    <span className="line-number">-</span>
+                    <span>{activeFile.vulnCode}</span>
+                  </div>
+
+                  <div style={{ color: 'var(--accent-neon-green)', fontSize: '0.72rem', margin: '14px 0 8px' }}>+++ AI Secure Replacement:</div>
+                  <div className="code-line line-fix">
+                    <span className="line-number">+</span>
+                    <span>{activeFile.fixCode}</span>
+                  </div>
                 </div>
               </div>
 
             </div>
 
+            {/* Bottom Interactive Command Console */}
+            <div className="terminal-console">
+              <div className="console-header">
+                <span><i className="fas fa-terminal" style={{ color: 'var(--accent-neon-green)', marginRight: '6px' }}></i>SentinelAI Security Audit Stream</span>
+                <span>Press Scan to re-verify AST tokens</span>
+              </div>
+              <div className="console-stream">
+                {logs.map((l, i) => <div key={i}>{l}</div>)}
+              </div>
+            </div>
+
           </main>
+
         </div>
       );
     }
 
-    function ScoreCard({ label, value, sub, color, icon }) {
-      return (
-        <div className="sec-card">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-            <span style={{ fontSize: '0.78rem', color: 'var(--text-dim)', fontWeight: 700 }}>{label}</span>
-            <i className={icon} style={{ color, fontSize: '1.1rem' }}></i>
-          </div>
-          <div className="font-display" style={{ fontSize: '1.7rem', fontWeight: 800, color: '#fff' }}>{value}</div>
-          <div style={{ fontSize: '0.72rem', color, fontWeight: 600, marginTop: '2px' }}>{sub}</div>
-        </div>
-      );
-    }
-
-    ReactDOM.createRoot(document.getElementById('root')).render(<DevSecOpsDashboard />);
+    ReactDOM.createRoot(document.getElementById('root')).render(<SentinelApp />);
   </script>
 </body>
 </html>
