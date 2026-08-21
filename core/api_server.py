@@ -117,3 +117,5 @@ def run_server(port=8083):
 
 if __name__ == '__main__':
     run_server()
+
+# Playground REST API endpoint handler v3.6
