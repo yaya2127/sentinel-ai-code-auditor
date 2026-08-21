@@ -45,3 +45,5 @@ def read_log():
 
 if __name__ == '__main__':
     app.run(port=5000)
+
+# Added JWT test pattern
