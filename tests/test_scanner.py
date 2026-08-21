@@ -25,6 +25,18 @@ class TestASTSecurityScanner(unittest.TestCase):
         self.assertTrue(len(vulns) > 0)
         self.assertEqual(vulns[0]["vuln_type"], "BUFFER_OVERFLOW")
 
+    def test_insecure_deserialization(self):
+        code = "data = pickle.loads(user_payload)"
+        vulns = self.scanner.scan_file("test.py", code)
+        self.assertTrue(len(vulns) > 0)
+        self.assertEqual(vulns[0]["vuln_type"], "INSECURE_DESERIALIZATION")
+
+    def test_command_injection(self):
+        code = 'os.system(f"ping {user_host}")'
+        vulns = self.scanner.scan_file("test.py", code)
+        self.assertTrue(len(vulns) > 0)
+        self.assertEqual(vulns[0]["vuln_type"], "COMMAND_INJECTION")
+
     def test_patch_synthesis(self):
         vuln = {
             "vuln_id": "VULN-TEST-01",
