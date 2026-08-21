@@ -61,6 +61,24 @@ class ASTSecurityScanner:
                 "pattern": r"go\s+[a-zA-Z0-9_]+\s*\(",
                 "desc": "Goroutine spawned without panic recovery handler in Go. Risk of unhandled application crash.",
                 "recommendation": "Wrap goroutine execution in a recovery block using defer func() { recover() }()."
+            },
+            {
+                "id": "SEC-DESER-007",
+                "cwe": "CWE-502",
+                "type": "INSECURE_DESERIALIZATION",
+                "severity": "CRITICAL",
+                "pattern": r"\bpickle\.loads\s*\(|\byaml\.unsafe_load\s*\(",
+                "desc": "Untrusted binary data passed to Python pickle or unsafe YAML loader. High risk of Remote Code Execution (RCE).",
+                "recommendation": "Use json.loads() or yaml.safe_load() instead of pickle."
+            },
+            {
+                "id": "SEC-CMD-008",
+                "cwe": "CWE-78",
+                "type": "COMMAND_INJECTION",
+                "severity": "CRITICAL",
+                "pattern": r"\bos\.system\s*\(\s*f[\"']|\bsubprocess\.Popen\s*\(\s*.*shell\s*=\s*True",
+                "desc": "User input formatted directly into shell execution command. Vulnerable to OS Command Injection.",
+                "recommendation": "Pass arguments as a list to subprocess.run(..., shell=False)."
             }
         ]
 
