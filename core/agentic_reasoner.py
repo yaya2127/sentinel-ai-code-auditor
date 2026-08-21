@@ -27,6 +27,10 @@ class AgenticAIReasoner:
             patched_snippet = '    safe_name = flask.escape(name)\n    html_response = f"<h1>Welcome to Sentinel Portal, {safe_name}!</h1>"'
         elif vuln_type == "PATH_TRAVERSAL":
             patched_snippet = '    safe_file = os.path.basename(filename)\n    with open(os.path.join("/var/logs/", safe_file), "r") as f:'
+        elif vuln_type == "BUFFER_OVERFLOW":
+            patched_snippet = '    strncpy(dest_buffer, user_input_str, sizeof(dest_buffer) - 1);'
+        elif vuln_type == "UNCHECKED_GOROUTINE_PANIC":
+            patched_snippet = '    go func() { defer func() { if r := recover(); r != nil { log.Println("Goroutine panic recovered", r) } }(); processTaskWorker(job) }()'
 
         # Replace vulnerable line
         if 0 < line_num <= len(patched_lines):
@@ -68,13 +72,13 @@ def test_security_remediation_line_{line_num}():
     \"\"\"
     client = app.test_client()
     
-    # 1. Inject malicious exploit payload
+    # Inject malicious exploit payload
     response = client.post('/login', data={{
         'username': "' OR '1'='1",
         'password': "' OR '1'='1"
     }})
     
-    # 2. Verify exploit attempt is rejected safely (No 200 OK SQL bypass)
+    # Verify exploit attempt is rejected safely
     assert response.status_code != 200
     assert b"token" not in response.data
 """
