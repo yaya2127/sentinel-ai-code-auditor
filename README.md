@@ -1,16 +1,17 @@
 # 🛡️ SentinelAI — Autonomous Agentic AI Code Security & Vulnerability Auditor
 
+[![DevSecOps CI](https://github.com/yaya2127/sentinel-ai-code-auditor/actions/workflows/security_ci.yml/badge.svg)](https://github.com/yaya2127/sentinel-ai-code-auditor/actions)
 [![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.2-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![Docker](https://img.shields.io/badge/Docker-Multi--Container-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 
-An enterprise-grade, autonomous **Agentic AI Code Security & Vulnerability Auditor** (**SentinelAI**). Built for AST static security code scanning, automated vulnerability detection (SQL Injections, Hardcoded Secrets, XSS, Path Traversal), unified Git diff patch synthesis, unit test generation, and interactive Cyber Security Dashboard visualization.
+An enterprise-grade, autonomous **Agentic AI Code Security & Vulnerability Auditor** (**SentinelAI**). Built for AST static security code scanning, automated vulnerability detection (SQL Injections, Hardcoded Secrets, XSS, Path Traversal, C/C++ Buffer Overflows, Go Goroutine Panics), unified Git diff patch synthesis, unit test generation, and interactive DevSecOps Code Security Studio visualization.
 
 ---
 
-## 🏛️ Architecture & System Design
+## 🏛️ System Architecture
 
 ```mermaid
 graph TD
@@ -19,42 +20,44 @@ graph TD
     C -->|Evaluate Severity Matrix| D["PostgreSQL / SQLite Security Audit Store"]
     C -->|Synthesize Secure Code Fixes| E["Unified Git Diff Patch Synthesizer"]
     C -->|Synthesize Test Suite| F["Automated Unit Test Generator (Pytest)"]
-    E --> G["React 18 Cyber Security Dashboard"]
+    E --> G["React 18 DevSecOps Security Studio"]
     F --> G
 ```
 
 ---
 
-## 🌟 Key Features
+## 🌟 Supported AST Security Rule Matrix
 
-- 🔍 **Abstract Syntax Tree (AST) Security Parser**: Scans codebases for AST pattern violations (CWE-89 SQLi, CWE-798 Secrets, CWE-79 XSS, CWE-22 Path Traversal).
-- 🤖 **Autonomous Agentic AI Reasoner**: Evaluates code vulnerability context, calculates repository risk scores, and synthesizes 1-click code remediation patches.
-- 📜 **Unified Git Diff Patch Synthesizer**: Generates standard unified diff patches (`--- a/file +++ b/file`) showing original vs. AI-remediated code.
-- 🧪 **Automated Security Unit Test Generator**: Synthesizes Pytest unit test suites that verify vulnerability fixes.
-- 💻 **Cyber Violet React Dashboard**: Interactive security matrix table, live AST audit log stream, risk score metrics, and side-by-side code diff viewer.
+| Rule ID | CWE ID | Vulnerability Type | Language | Severity | Remediation Strategy |
+| :--- | :---: | :--- | :---: | :---: | :--- |
+| `SEC-SQLI-001` | **CWE-89** | SQL Injection | Python / JS | `CRITICAL` | Parameterized SQL query placeholders |
+| `SEC-SECRET-002` | **CWE-798** | Hardcoded Plaintext API Key | All | `HIGH` | Dynamic `os.getenv()` environment variables |
+| `SEC-XSS-003` | **CWE-79** | Reflected XSS | Python / JS | `HIGH` | DOM HTML string escaping (`flask.escape`) |
+| `SEC-TRAVERSAL-004` | **CWE-22** | Path Traversal / File Read | All | `HIGH` | Path boundary sanitization (`os.path.basename`) |
+| `SEC-BUFFER-005` | **CWE-120** | Unbounded Buffer Overflow | C / C++ | `CRITICAL` | Bounded memory copy (`strncpy`, `snprintf`) |
+| `SEC-PANIC-006` | **CWE-391** | Unchecked Goroutine Panic | Go | `HIGH` | Defer panic recovery block (`recover()`) |
 
 ---
 
-## 🗄️ Database Architecture (`db/schema.sql`)
+## 🧪 Interactive AST Security Playground
 
-- `audit_scans`: Stores scan history, total lines audited, and repository risk scores (0–100).
-- `vulnerabilities`: Log table detailing file path, line number, CWE ID, severity rating, and description.
-- `code_patches`: Stores original code, AI-patched code, and unified diff strings.
-- `generated_tests`: Stores synthesized unit test suites.
+SentinelAI includes an in-browser **Interactive AST Code Sandbox**. Paste any custom Python, JavaScript, C++, or Go code snippet into the DevSecOps Studio UI to run real-time security analysis and view AI-synthesized Git diff patches on demand.
 
 ---
 
 ## 🚀 Quick Start
 
-### 1. Local Browser Viewing
-Simply open `index.html` in your web browser:
+### 1. Web Dashboard & Playground (GitHub Pages)
+👉 Live Hosted App: **[yaya2127.github.io/sentinel-ai-code-auditor](https://yaya2127.github.io/sentinel-ai-code-auditor/)**
+
+### 2. Local Browser Viewing
+Simply open `index.html` in Chrome:
 ```bash
-open c:/yared-projects/sentinel-ai-code-auditor/index.html
+open index.html
 ```
 
-### 2. Run Python Audit REST API Server
+### 3. Run Python Audit REST API Server
 ```bash
-cd c:/yared-projects/sentinel-ai-code-auditor
 python -m core.api_server
 ```
 
