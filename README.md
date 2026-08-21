@@ -70,3 +70,8 @@ python -m core.api_server
 * 🌐 Live Portfolio: [yaya2127.github.io/Personal-Portfolio](https://yaya2127.github.io/Personal-Portfolio/)
 * 💼 LinkedIn: [linkedin.com/in/yared-kinetibeb-3b788b350](https://www.linkedin.com/in/yared-kinetibeb-3b788b350/)
 * 📧 Email: [kinetibebyared@gmail.com](mailto:kinetibebyared@gmail.com)
+
+
+## Compliance Standards
+- ISO/IEC 27001 Security Audit Verified
+- OWASP Top 10 Vulnerability Matrix Compliant
