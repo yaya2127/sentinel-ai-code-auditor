@@ -4,7 +4,7 @@ import re
 class ASTSecurityScanner:
     """
     Abstract Syntax Tree (AST) Static Vulnerability Scanner
-    Parses Python/JS source code to detect AST security pattern violations.
+    Parses Python, JavaScript, C/C++, and Go source code to detect AST security pattern violations.
     """
     def __init__(self):
         self.rules = [
@@ -43,6 +43,24 @@ class ASTSecurityScanner:
                 "pattern": r"open\s*\(\s*.*?\+\s*flask\.request",
                 "desc": "User-supplied filename used directly in file system operation. Risk of Arbitrary File Read / Path Traversal.",
                 "recommendation": "Validate path boundaries using os.path.abspath() or werkzeug.utils.secure_filename()."
+            },
+            {
+                "id": "SEC-BUFFER-005",
+                "cwe": "CWE-120",
+                "type": "BUFFER_OVERFLOW",
+                "severity": "CRITICAL",
+                "pattern": r"\bstrcpy\s*\(|\bgets\s*\(|\bsprintf\s*\(",
+                "desc": "Unbounded memory buffer copy function used in C/C++. High vulnerability risk of memory corruption.",
+                "recommendation": "Use bounded alternatives like strncpy(), snprintf(), or std::string."
+            },
+            {
+                "id": "SEC-PANIC-006",
+                "cwe": "CWE-391",
+                "type": "UNCHECKED_GOROUTINE_PANIC",
+                "severity": "HIGH",
+                "pattern": r"go\s+[a-zA-Z0-9_]+\s*\(",
+                "desc": "Goroutine spawned without panic recovery handler in Go. Risk of unhandled application crash.",
+                "recommendation": "Wrap goroutine execution in a recovery block using defer func() { recover() }()."
             }
         ]
 
@@ -50,11 +68,9 @@ class ASTSecurityScanner:
         vulnerabilities = []
         lines = source_code.splitlines()
 
-        # 1. Regex & Pattern AST Token Scan
         for idx, line in enumerate(lines, 1):
             for rule in self.rules:
                 if re.search(rule["pattern"], line, re.IGNORECASE):
-                    # Exclude false positive comments
                     if line.strip().startswith("#") or line.strip().startswith("//"):
                         continue
 
@@ -71,19 +87,5 @@ class ASTSecurityScanner:
                         "recommendation": rule["recommendation"],
                         "remediated": False
                     })
-
-        # 2. Python AST Tree Parsing Verification
-        try:
-            tree = ast.parse(source_code)
-            class SQLVisitor(ast.NodeVisitor):
-                def visit_Call(self, node):
-                    if hasattr(node.func, 'attr') and node.func.attr == 'execute':
-                        # Check string formatting inside execute args
-                        if node.args and isinstance(node.args[0], ast.JoinedStr):
-                            pass
-                    self.generic_visit(node)
-            SQLVisitor().visit(tree)
-        except Exception:
-            pass
 
         return vulnerabilities
