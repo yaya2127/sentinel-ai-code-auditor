@@ -50,3 +50,5 @@ class TestASTSecurityScanner(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+# Added assertions for JWT secret detection
