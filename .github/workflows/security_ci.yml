@@ -26,3 +26,4 @@ jobs:
     - name: Run SentinelAI AST Unit Test Suite
       run: |
         python -m unittest discover tests
+# Updated workflow config
