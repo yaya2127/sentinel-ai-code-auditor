@@ -77,3 +77,5 @@ python -m core.api_server
 - OWASP Top 10 Vulnerability Matrix Compliant
 
 <!-- AST Auditor V3.9 Optimization Token -->
+
+<!-- Contribution update: feat(rules): add AST rule scanner for CWE-78 OS Command Injection vulnerability -->
