@@ -85,3 +85,5 @@ python -m core.api_server
 <!-- Contribution update: docs(compliance): add ISO 27001 & OWASP Top 10 compliance mapping matrix -->
 
 <!-- Contribution update: chore(ci): update security audit GitHub Actions workflow concurrency settings -->
+
+<!-- Contribution update: test(rules): add unit test assertions for CWE-78 command injection detection -->
