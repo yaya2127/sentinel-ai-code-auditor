@@ -83,3 +83,5 @@ python -m core.api_server
 <!-- Contribution update: feat(rules): add AST rule scanner for CWE-502 Insecure Deserialization flaw -->
 
 <!-- Contribution update: docs(compliance): add ISO 27001 & OWASP Top 10 compliance mapping matrix -->
+
+<!-- Contribution update: chore(ci): update security audit GitHub Actions workflow concurrency settings -->
